@@ -1,10 +1,20 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import {ImageModule} from "./images_zipper/image.module";
-import {ScrapperModule} from "./scrapper/scrapper.module";
+import {Module} from '@nestjs/common';
+import {BullModule} from '@nestjs/bull';
+import {AppController} from './app.controller';
+import {MangaQueueModule} from "./queues/manga-queue.module";
+
 
 @Module({
-  imports: [ImageModule,ScrapperModule],
-  controllers: [AppController],
+    imports: [
+        BullModule.forRoot({
+            redis: {
+                host: 'localhost',
+                port: 6379
+            }
+        }),
+        MangaQueueModule,
+    ],
+    controllers: [AppController],
 })
-export class AppModule {}
+export class AppModule {
+}

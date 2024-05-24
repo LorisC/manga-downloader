@@ -1,4 +1,5 @@
 import {Page} from "puppeteer";
+import {Job} from "bull";
 
 export type IMangaScrapper = {
     page: Page;
@@ -8,5 +9,5 @@ export type IMangaScrapper = {
     imageLinks: string[];
     nextPageLink: string;
     getNextPageLink: (page: Page) => Promise<string | null>;
-    scrap: () => Promise<string[] | null>
+    scrap: (job: Job) => Promise<string[] | null>
 }

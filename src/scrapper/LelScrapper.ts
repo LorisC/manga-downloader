@@ -1,5 +1,6 @@
 import {Page} from "puppeteer";
 import {IMangaScrapper} from "./IMangaScrapper";
+import {Job} from "bull";
 
 export class LelScrapper implements IMangaScrapper {
     constructor(page: Page) {
@@ -35,7 +36,7 @@ export class LelScrapper implements IMangaScrapper {
     }
 
 
-    async scrap(): Promise<string[]> {
+    async scrap(job: Job): Promise<string[]> {
         const urls: string[] = [];
         let link = await this.getNextPageLink(this.page);
         while (Boolean(link) && !Boolean(this.visitedLink[link])) {

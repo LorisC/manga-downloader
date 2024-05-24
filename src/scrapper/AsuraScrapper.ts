@@ -1,5 +1,6 @@
 import {Page} from "puppeteer";
 import {IMangaScrapper} from "./IMangaScrapper";
+import {Job} from "bull";
 
 export class AsuraScrapper implements IMangaScrapper {
     constructor(page: Page) {
@@ -35,13 +36,12 @@ export class AsuraScrapper implements IMangaScrapper {
         this.nextPageLink = await this.getNextPageLink(this.page);
         await this.page.goto(this.nextPageLink);
     }
-    async scrap(): Promise<string[]> {
+    async scrap(job: Job): Promise<string[]> {
         const urls = [];
 
         this.nextPageLink = await this.getNextPageLink(this.page);
 
         do {
-            console.log(this.nextPageLink);
             const images = await this.getImages(this.page);
             urls.push(...images);
             await this.goToNextPage();

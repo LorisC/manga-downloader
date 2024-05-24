@@ -1,12 +1,17 @@
 import {Injectable} from '@nestjs/common';
 import {IMangaScrapper} from "./IMangaScrapper";
 import ScrapperFactory from "./scrapper.factory";
+import {Job} from "bull";
+import {CustomBrowser} from "./CustomBrowser";
 
 @Injectable()
 export class ScrapperService {
-    async scrap(site: string, url: string): Promise<Array<string>> {
+    async scrap(site: string, url: string, job: Job): Promise<Array<string>> {
         const scrapper: IMangaScrapper = await ScrapperFactory.getScrapper(site, url);
 
-        return scrapper.scrap();
+        const result = await scrapper.scrap(job);
+
+        await CustomBrowser.closeBrowser();
+        return result;
     }
 }
