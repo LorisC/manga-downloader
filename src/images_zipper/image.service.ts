@@ -47,7 +47,7 @@ export class ImageService {
     });
     fs.rmdirSync(downloadFolder);
 
-    return (zipPath);
+    return (`public/${zipFilename}`);
   };
 
 

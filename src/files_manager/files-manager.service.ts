@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { DOWNLOAD_COMPLETED_EVENT, DOWNLOAD_MANGA_EVENT, DOWNLOAD_PROGRESS_EVENT } from '../events.constante';
 import * as fs from 'node:fs';
+import path from 'node:path';
 
 type DownloadableFile = {
   id: string;
@@ -35,7 +36,9 @@ export class FilesManagerService {
 
     info.downloaded = true;
 
-    fs.unlinkSync(info.path);
+    const zipPath = path.join(__dirname, '..', '..',  info.path);
+    console.log(zipPath);
+    fs.unlinkSync(zipPath);
 
     delete this.files[fileId];
 
