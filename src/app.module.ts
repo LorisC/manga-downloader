@@ -1,8 +1,9 @@
 import {Module} from '@nestjs/common';
 import {BullModule} from '@nestjs/bull';
 import {AppController} from './app.controller';
-import {MangaQueueModule} from "./queues/manga-queue.module";
-
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { MangaQueueModule } from './queues/manga-queue.module';
+import { FilesManagerModule } from './files_manager/files-manager.module';
 
 @Module({
     imports: [
@@ -13,6 +14,8 @@ import {MangaQueueModule} from "./queues/manga-queue.module";
             }
         }),
         MangaQueueModule,
+        FilesManagerModule,
+        EventEmitterModule.forRoot()
     ],
     controllers: [AppController],
 })

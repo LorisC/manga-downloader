@@ -3,7 +3,6 @@ import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import { Browser, Page } from 'puppeteer';
 import randomUseragent from 'random-useragent';
 
-console.log(StealthPlugin)
 puppeteer.use(StealthPlugin());
 
 
